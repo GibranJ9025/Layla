@@ -174,7 +174,7 @@ quince años de gracia, belleza y amor.
     </div>
 
     <h3>Código de vestimenta</h3>
-    <p>Casual</p>
+    <p>formal</p>
 
     <h3>Galería de fotos</h3>
     <div class="gallery" id="carousel">
@@ -276,9 +276,8 @@ quince años de gracia, belleza y amor.
       "Joshua": 2,
       "Lidia": 	2,
       "Emanuel": 2,
-      "Victor": 2,
       "zoe": 2,
-      "Pame": 2,
+      "Pamela": 2,
       "Yael": 5,
       "Lis": 2,
       "Alan": 2,
@@ -392,6 +391,8 @@ quince años de gracia, belleza y amor.
       const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
       const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
       document.getElementById("contador").innerHTML = `${dias} días, ${horas} horas, ${minutos} minutos, ${segundos} segundos`;
+      <h3>Faltan para el evento:</h3>
+      div id="contador"></div>
     }
     const intervaloContador = setInterval(actualizarContador, 1000);
     actualizarContador();
