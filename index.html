@@ -19,7 +19,6 @@
     }
 
     .container {
-    
       max-width: 800px;
       padding: 20px;
       background-color: rgba(0, 0, 0, 0.7);
@@ -35,7 +34,7 @@
     #contador {
       font-size: 1.5rem;
       font-weight: bold;
-      margin-bottom: 20px;
+      margin: 20px;
       color: #FFD700;
     }
 
@@ -77,6 +76,20 @@
       color: #D70929;
     }
 
+    button {
+      background-color: white;
+      color: black;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    button:hover {
+      background-color: #ddd;
+    }
+
     .map-link {
       text-align: center;
       margin: 10px 0;
@@ -87,11 +100,6 @@
       text-decoration: underline;
     }
 
-    #musicaBtn {
-      position: relative;
-      z-index: 10;
-    }
-
     canvas {
       display: none;
       margin: 20px auto;
@@ -99,23 +107,22 @@
   </style>
 </head>
 <body>
-
-  <!-- Botón de Música Fuera del Contenedor -->
   <button id="musicaBtn" onclick="iniciarMusica()">🎵 Reproducir música</button>
+  <div id="contador"></div>
 
   <div class="container">
     <h1>Para Mis XV</h1>
-    <p>Celebramos más que un cumpleaños; celebramos el inicio de un hermoso viaje. Que cada paso que des, cada sueño que sigas y cada sonrisa que regales iluminen tu camino.</p>
+    <p>Celebramos más que un cumpleaños; celebramos el inicio de un hermoso viaje...</p>
     <h2>Layla Naomi Posadas Trejo</h2>
 
-    <h3>por parte de:</h3>
+    <h3>Por parte de:</h3>
     <p>José Miguel Posadas Domínguez</p>
     <p>Lizbeth Trejo Contreras</p>
-    <h3>nos complace invitarlos a la celebracion del cumpleaños numero 15 de nuestra hija</h3>
+    <h3>Nos complace invitarlos a la celebración del cumpleaños número 15 de nuestra hija</h3>
 
     <h3>Poema especial para conmemorar</h3>
     <p class="poem">
-Lila de primavera. 
+Lila de primavera.
 
 En esta noche de luz y estrellas,
 brilla una flor entre las doncellas.
@@ -124,7 +131,7 @@ ojos cafés, miel de alborada.
 
 Tu sonrisa es calma, suave ternura,
 dulce reflejo de alma pura.
-Quienes te aman,  te visten de sueños,
+Quienes te aman, te visten de sueños,
 de pasos nuevos y anhelos pequeños.
 
 Como el jazmín que al viento se mece,
@@ -161,7 +168,7 @@ quince años de gracia, belleza y amor.
     </div>
 
     <h3>Código de vestimenta</h3>
-    <p>formal</p>
+    <p>Casual</p>
 
     <h3>Galería de fotos</h3>
     <div class="gallery" id="carousel">
@@ -188,8 +195,7 @@ quince años de gracia, belleza y amor.
     </div>
 
     <h3>Te esperamos</h3>
-    <h3>"Favor de confirmar su asistencia enviando un mensaje de whatsapp a Jose Miguel Posadas Dominguez"</h3>
-    <h3>(55 2201 4046)</h3>
+    <h3>Confirmación de asistencia</h3>
     <form onsubmit="mostrarBoletos(event)">
       <label for="nombre">Nombre del invitado:</label>
       <input type="text" id="nombre" name="nombre" required>
@@ -199,8 +205,7 @@ quince años de gracia, belleza y amor.
   </div>
 
   <canvas id="boletoCanvas" width="600" height="400"></canvas>
-
-  <audio id="musica" src="audio/creep.mp3"></audio>
+  <audio id="musica" src="audio/creep.mp3" preload="auto"></audio>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script>
@@ -269,7 +274,7 @@ quince años de gracia, belleza y amor.
       "Lis": 2,
       "Alan": 2,
       "Edwin": 5,
-	
+      // Agrega el resto aquí...
     };
 
     function mostrarBoletos(event) {
@@ -281,7 +286,7 @@ quince años de gracia, belleza y amor.
 
       if (invitados[nombre]) {
         const boletos = invitados[nombre];
-        resultado.textContent = `${nombre} , se te han asignado ${boletos} boleto(s) para la entrada al salón.`;
+        resultado.textContent = `${nombre}, se te han asignado ${boletos} boleto(s).`;
 
         const imagen = new Image();
         imagen.src = 'invitaciones/plantilla.png';
@@ -290,57 +295,39 @@ quince años de gracia, belleza y amor.
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           ctx.drawImage(imagen, 0, 0, canvas.width, canvas.height);
 
-          // Texto centrado
           ctx.fillStyle = "white";
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           ctx.font = "24px Arial";
           const textoY = canvas.height - 150;
           ctx.fillText(`${nombre}`, canvas.width / 2, textoY - 20);
-          ctx.fillText(`y`, canvas.width / 2, textoY);
-          ctx.fillText(`Familia`, canvas.width / 2, textoY + 20);
+          ctx.fillText(`y Familia`, canvas.width / 2, textoY + 20);
           ctx.fillText(`Boletos: ${boletos}`, canvas.width / 2, textoY + 45);
 
-          // Variables para QR
           const qrSize = 60;
-          const espacioEntreQR = 220;
-          const totalQRWidth = qrSize * 2 + espacioEntreQR;
-          const qrInicioX = (canvas.width - totalQRWidth) / 2;
-          const qrY = canvas.height - qrSize - 10;
+          const espacio = 220;
+          const x0 = (canvas.width - (qrSize * 2 + espacio)) / 2;
+          const y0 = canvas.height - qrSize - 10;
 
-          // Dibujar ambos QR
-          QRCode.toDataURL('https://www.google.com/maps/place/C.+19+2,+Jos%C3%A9+L%C3%B3pez+Portillo,+Iztapalapa,+09920+Ciudad+de+M%C3%A9xico', function (err, url1) {
-            if (err) {
-              console.error(err);
-              return;
-            }
+          QRCode.toDataURL('https://www.google.com/maps/place/C.+19+2...', (err, url1) => {
             const qr1 = new Image();
             qr1.src = url1;
-            qr1.onload = function () {
-              ctx.drawImage(qr1, qrInicioX, qrY, qrSize, qrSize);
-            };
+            qr1.onload = () => ctx.drawImage(qr1, x0, y0, qrSize, qrSize);
           });
 
-          QRCode.toDataURL('https://www.google.com/maps/place/Av.+Benito+Juarez+190,+Francisco+Villa,+Iztapalapa,+09720+Ciudad+de+M%C3%A9xico', function (err, url2) {
-            if (err) {
-              console.error(err);
-              return;
-            }
+          QRCode.toDataURL('https://www.google.com/maps/place/Av.+Benito...', (err, url2) => {
             const qr2 = new Image();
             qr2.src = url2;
-            qr2.onload = function () {
-              ctx.drawImage(qr2, qrInicioX + qrSize + espacioEntreQR, qrY, qrSize, qrSize);
-            };
+            qr2.onload = () => ctx.drawImage(qr2, x0 + qrSize + espacio, y0, qrSize, qrSize);
           });
         };
-
       } else {
-        resultado.textContent = `Lo sentimos, no se encontró a ${nombre} en la lista de invitados.`;
+        resultado.textContent = `Lo sentimos, ${nombre} no está en la lista.`;
         canvas.style.display = "none";
       }
     }
 
-    // Carrusel de imágenes
+    // Carrusel
     let index = 0;
     const images = document.querySelectorAll('#carousel img');
     setInterval(() => {
@@ -349,12 +336,12 @@ quince años de gracia, belleza y amor.
       images[index].classList.add('active');
     }, 3000);
 
-    // Música con retardo y loop
+    // Música
     const musica = document.getElementById('musica');
     function iniciarMusica() {
-      setTimeout(() => {
-        musica.play();
-      }, 1000);
+      musica.play().catch(e => {
+        console.log("Interacción requerida para iniciar música:", e);
+      });
     }
     musica.addEventListener('ended', () => {
       setTimeout(() => {
