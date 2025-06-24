@@ -107,7 +107,9 @@
   </style>
 </head>
 <body>
+  <!-- Botón para iniciar música -->
   <button id="musicaBtn" onclick="iniciarMusica()">🎵 Reproducir música</button>
+  
   <div id="contador"></div>
 
   <div class="container">
@@ -205,10 +207,13 @@ quince años de gracia, belleza y amor.
   </div>
 
   <canvas id="boletoCanvas" width="600" height="400"></canvas>
+
+  <!-- Audio oculto -->
   <audio id="musica" src="audio/Creep.mp3" preload="auto"></audio>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script>
+    // Lista de invitados con boletos asignados
     const invitados = {
       "Andrea Pérez": 2,
       "Carlos García": 4,
@@ -276,6 +281,7 @@ quince años de gracia, belleza y amor.
       "Edwin": 5,
     };
 
+    // Función para mostrar boletos y generar boleto en canvas con QR
     function mostrarBoletos(event) {
       event.preventDefault();
       const nombre = document.getElementById("nombre").value.trim();
@@ -308,13 +314,21 @@ quince años de gracia, belleza y amor.
           const x0 = (canvas.width - (qrSize * 2 + espacio)) / 2;
           const y0 = canvas.height - qrSize - 10;
 
-          QRCode.toDataURL('https://www.google.com/maps/place/C.+19+2...', (err, url1) => {
+          QRCode.toDataURL('https://www.google.com/maps/place/Calle+19+No+2+Jose+Lopez+Portillo+Iztapalapa', (err, url1) => {
+            if (err) {
+              console.error(err);
+              return;
+            }
             const qr1 = new Image();
             qr1.src = url1;
             qr1.onload = () => ctx.drawImage(qr1, x0, y0, qrSize, qrSize);
           });
 
-          QRCode.toDataURL('https://www.google.com/maps/place/Av.+Benito...', (err, url2) => {
+          QRCode.toDataURL('https://www.google.com/maps/place/Av.+Benito+Juárez+190+Francisco+Villa+Iztapalapa', (err, url2) => {
+            if (err) {
+              console.error(err);
+              return;
+            }
             const qr2 = new Image();
             qr2.src = url2;
             qr2.onload = () => ctx.drawImage(qr2, x0 + qrSize + espacio, y0, qrSize, qrSize);
@@ -326,7 +340,7 @@ quince años de gracia, belleza y amor.
       }
     }
 
-    // Carrusel
+    // Carrusel de imágenes
     let index = 0;
     const images = document.querySelectorAll('#carousel img');
     setInterval(() => {
@@ -337,11 +351,16 @@ quince años de gracia, belleza y amor.
 
     // Música
     const musica = document.getElementById('musica');
+    const btnMusica = document.getElementById('musicaBtn');
+
     function iniciarMusica() {
-      musica.play().catch(e => {
+      musica.play().then(() => {
+        btnMusica.style.display = 'none';
+      }).catch(e => {
         console.log("Interacción requerida para iniciar música:", e);
       });
     }
+
     musica.addEventListener('ended', () => {
       setTimeout(() => {
         musica.currentTime = 0;
