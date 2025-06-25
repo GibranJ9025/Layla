@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Invitación XV Layla Naomi</title>
   <style>
     body {
@@ -31,13 +31,6 @@
       text-align: center;
     }
 
-    #contador {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin: 20px;
-      color: #FFD700;
-    }
-
     .poem {
       font-style: italic;
       white-space: pre-line;
@@ -62,7 +55,6 @@
       object-fit: contain;
       opacity: 0;
       transition: opacity 1s ease;
-      background-color: black;
     }
 
     .gallery img.active {
@@ -78,7 +70,7 @@
     label, input {
       display: block;
       margin: 5px auto;
-      color: #D70929;
+      color: #FFD700;
     }
 
     button {
@@ -93,21 +85,6 @@
 
     button:hover {
       background-color: #ddd;
-    }
-
-    .map-link {
-      text-align: center;
-      margin: 10px 0;
-    }
-
-    .map-link a {
-      color: #aaf;
-      text-decoration: underline;
-    }
-
-    canvas {
-      display: none;
-      margin: 20px auto;
     }
 
     #imagen-generada {
@@ -126,49 +103,43 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 <body>
-  <button id="musicaBtn" onclick="iniciarMusica()">🎵 Reproducir música</button>
-  <div id="contador"></div>
 
   <div class="container">
     <h1>Para Mis XV</h1>
-    <p>Celebramos más que un cumpleaños; celebramos el inicio de un hermoso viaje...</p>
+    <p>Celebramos más que un cumpleaños; celebramos el inicio de un hermoso viaje. Que cada paso que des, cada sueño que sigas y cada sonrisa que regales iluminen tu camino.</p>
     <h2>Layla Naomi Posadas Trejo</h2>
 
-    <h3>Por parte de sus padres :</h3>
-    <p>José Miguel Posadas Domínguez</p>
-    <p>Lizbeth Trejo Contreras</p>
-    <p>nos complace invitarlos y esperamos nos acompañen en esta dia tan especial para nosotros</p>
-
-
-    <h3>Poema especial para conmemorar</h3>
+    <h3>Poema especial</h3>
     <p class="poem">
-Lila de primavera.
+Lila de primavera. 
 
 En esta noche de luz y estrellas,
 brilla una flor entre las doncellas.
 Cabello negro como la noche callada,
 ojos cafés, miel de alborada.
-...
+
+Tu sonrisa es calma, suave ternura,
+dulce reflejo de alma pura.
+Quienes te aman,  te visten de sueños,
+de pasos nuevos y anhelos pequeños.
+
+Como el jazmín que al viento se mece,
+tu corazón con dulzura florece.
+No hay diamante que más reluzca
+que tu mirada serena y dulce.
+
+Hoy danzas al ritmo del tiempo,
+dejando atrás el inocente cuento.
+Y aunque la niña ya empieza a volar,
+tu esencia dulce sabrá siempre estar.
+
+Que el camino se tiña de auroras,
+que te acompañen las horas más doradas.
+Hoy celebramos tu vida en flor,
+quince años de gracia, belleza y amor.
     </p>
 
-    <h3>Fecha del evento</h3>
-    <p>19 de septiembre del 2025</p>
-
-    <h3>Misa</h3>
-    <p>Parroquia de San José de Gracia<br>Calle 19, No. 2, Col. José López Portillo, Iztapalapa</p>
-    <p>Hora: 17:40 hrs</p>
-    <div class="map-link">
-      <a href="https://www.google.com/maps/place/Calle+19+No+2+Jose+Lopez+Portillo+Iztapalapa" target="_blank">Ver en Google Maps</a>
-    </div>
-
-    <h3>Recepción</h3>
-    <p>Salón Majestic<br>Av. Benito Juárez No. 190, Col. Francisco Villa, Iztapalapa</p>
-    <p>Hora: de 19:30 hrs a 20:00 hrs</p>
-    <div class="map-link">
-      <a href="https://www.google.com/maps/place/Av.+Benito+Juárez+190+Francisco+Villa+Iztapalapa" target="_blank">Ver en Google Maps</a>
-    </div>
-
-   <h3>Galería de fotos</h3>
+  <h3>Galería de fotos</h3>
     <div class="gallery" id="carousel">
       <img src="img/IMG-20250507-WA0008.jpg" class="active">
       <img src="img/IMG-20250505-WA0009.jpg">
@@ -202,13 +173,11 @@ ojos cafés, miel de alborada.
     <p id="resultado"></p>
   </div>
 
-  <canvas id="boletoCanvas" width="600" height="400"></canvas>
   <img id="imagen-generada" alt="Invitación generada">
   <a id="descargarBtn" download="invitacion.png"><button>Descargar Invitación</button></a>
-  <audio id="musica" src="audio/Creep.mp3" preload="auto"></audio>
 
   <script>
-     // Lista de invitados con boletos asignados
+    // Lista de invitados con boletos asignados
     const invitados = {
       "Andrea Pérez": 2,
       "Carlos García": 4,
@@ -275,15 +244,13 @@ ojos cafés, miel de alborada.
       "Lis": 2,
       "Alan": 2,
       "Edwin": 5,
-
     };
+
 
     function mostrarBoletos(event) {
       event.preventDefault();
       const nombre = document.getElementById("nombre").value.trim();
       const resultado = document.getElementById("resultado");
-      const canvas = document.getElementById("boletoCanvas");
-      const ctx = canvas.getContext("2d");
       const imagenGenerada = document.getElementById("imagen-generada");
       const descargarBtn = document.getElementById("descargarBtn");
 
@@ -291,10 +258,15 @@ ojos cafés, miel de alborada.
         const boletos = invitados[nombre];
         resultado.textContent = `${nombre}, se te han asignado ${boletos} boleto(s).`;
 
+        // Canvas en memoria
+        const canvas = document.createElement("canvas");
+        canvas.width = 600;
+        canvas.height = 400;
+        const ctx = canvas.getContext("2d");
+
         const imagen = new Image();
         imagen.src = 'invitaciones/plantilla.png';
         imagen.onload = function () {
-          //canvas.style.display = "block";
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           ctx.drawImage(imagen, 0, 0, canvas.width, canvas.height);
 
@@ -312,7 +284,7 @@ ojos cafés, miel de alborada.
           const x0 = (canvas.width - (qrSize * 2 + espacio)) / 2;
           const y0 = canvas.height - qrSize - 10;
 
-          QRCode.toDataURL('https://www.google.com/maps/place/Calle+19+No+2+Jose+Lopez+Portillo+Iztapalapa', (err, url1) => {
+          QRCode.toDataURL('https://maps.google.com/?q=misa', (err, url1) => {
             if (!err) {
               const qr1 = new Image();
               qr1.src = url1;
@@ -320,7 +292,7 @@ ojos cafés, miel de alborada.
             }
           });
 
-          QRCode.toDataURL('https://www.google.com/maps/place/Av.+Benito+Juárez+190+Francisco+Villa+Iztapalapa', (err, url2) => {
+          QRCode.toDataURL('https://maps.google.com/?q=recepcion', (err, url2) => {
             if (!err) {
               const qr2 = new Image();
               qr2.src = url2;
@@ -331,18 +303,29 @@ ojos cafés, miel de alborada.
                 imagenGenerada.style.display = "block";
                 descargarBtn.href = dataURL;
                 descargarBtn.style.display = "inline-block";
+                mostrarSoloInvitacion();
               };
             }
           });
         };
       } else {
         resultado.textContent = `Lo sentimos, ${nombre} no está en la lista.`;
-        canvas.style.display = "none";
         imagenGenerada.style.display = "none";
         descargarBtn.style.display = "none";
       }
     }
 
+    function mostrarSoloInvitacion() {
+      document.body.querySelectorAll("*").forEach(el => {
+        if (!['imagen-generada', 'descargarBtn'].includes(el.id)) {
+          el.style.display = "none";
+        }
+      });
+      document.getElementById("imagen-generada").style.display = "block";
+      document.getElementById("descargarBtn").style.display = "block";
+    }
+
+    // Galería automática
     let index = 0;
     const images = document.querySelectorAll('#carousel img');
     setInterval(() => {
@@ -350,41 +333,6 @@ ojos cafés, miel de alborada.
       index = (index + 1) % images.length;
       images[index].classList.add('active');
     }, 3000);
-
-    const musica = document.getElementById('musica');
-    const btnMusica = document.getElementById('musicaBtn');
-    function iniciarMusica() {
-      musica.play().then(() => {
-        btnMusica.style.display = 'none';
-      }).catch(e => {
-        console.log("Interacción requerida para iniciar música:", e);
-      });
-    }
-
-    musica.addEventListener('ended', () => {
-      setTimeout(() => {
-        musica.currentTime = 0;
-        musica.play();
-      }, 2000);
-    });
-
-    const fechaObjetivo = new Date("2025-09-19T00:00:00").getTime();
-    function actualizarContador() {
-      const ahora = new Date().getTime();
-      const diferencia = fechaObjetivo - ahora;
-      if (diferencia < 0) {
-        document.getElementById("contador").innerHTML = "¡Hoy es el gran día!";
-        clearInterval(intervaloContador);
-        return;
-      }
-      const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
-      document.getElementById("contador").innerHTML = `${dias} días, ${horas} horas, ${minutos} minutos, ${segundos} segundos`;
-    }
-    const intervaloContador = setInterval(actualizarContador, 1000);
-    actualizarContador();
   </script>
 </body>
 </html>
