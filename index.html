@@ -44,14 +44,13 @@
       margin: 20px 0;
     }
 
-    /* GALERÍA RESPONSIVA */
     .gallery {
       position: relative;
       width: 100%;
       max-width: 100%;
-      aspect-ratio: 4 / 3; /* Mantiene proporción 4:3 */
+      aspect-ratio: 4 / 3;
       overflow: hidden;
-      background-color: black; /* para que se vea el área si imagen no carga */
+      background-color: black;
     }
 
     .gallery img {
@@ -60,10 +59,10 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: contain; /* evita recortes, muestra completa */
+      object-fit: contain;
       opacity: 0;
       transition: opacity 1s ease;
-      background-color: black; /* para evitar bordes blancos */
+      background-color: black;
     }
 
     .gallery img.active {
@@ -111,7 +110,6 @@
       margin: 20px auto;
     }
 
-    /* Imagen generada para descargar */
     #imagen-generada {
       max-width: 100%;
       height: auto;
@@ -119,25 +117,26 @@
       margin: 20px auto;
       border: 3px solid white;
       border-radius: 10px;
-      cursor: pointer;
+    }
+
+    #descargarBtn {
+      display: none;
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 <body>
-  <!-- Botón para iniciar música -->
   <button id="musicaBtn" onclick="iniciarMusica()">🎵 Reproducir música</button>
-  
   <div id="contador"></div>
 
   <div class="container">
     <h1>Para Mis XV</h1>
-    <p>Celebramos más que un cumpleaños; celebramos el inicio de un hermoso viaje. Que cada paso que des, cada sueño que sigas y cada sonrisa que regales iluminen tu camino.</p>
+    <p>Celebramos más que un cumpleaños; celebramos el inicio de un hermoso viaje...</p>
     <h2>Layla Naomi Posadas Trejo</h2>
 
     <h3>Por parte de:</h3>
     <p>José Miguel Posadas Domínguez</p>
     <p>Lizbeth Trejo Contreras</p>
-    <h3>Nos complace invitarlos a la celebración del cumpleaños número 15 de nuestra hija</h3>
 
     <h3>Poema especial para conmemorar</h3>
     <p class="poem">
@@ -147,26 +146,7 @@ En esta noche de luz y estrellas,
 brilla una flor entre las doncellas.
 Cabello negro como la noche callada,
 ojos cafés, miel de alborada.
-
-Tu sonrisa es calma, suave ternura,
-dulce reflejo de alma pura.
-Quienes te aman, te visten de sueños,
-de pasos nuevos y anhelos pequeños.
-
-Como el jazmín que al viento se mece,
-tu corazón con dulzura florece.
-No hay diamante que más reluzca
-que tu mirada serena y dulce.
-
-Hoy danzas al ritmo del tiempo,
-dejando atrás el inocente cuento.
-Y aunque la niña ya empieza a volar,
-tu esencia dulce sabrá siempre estar.
-
-Que el camino se tiña de auroras,
-que te acompañen las horas más doradas.
-Hoy celebramos tu vida en flor,
-quince años de gracia, belleza y amor.
+...
     </p>
 
     <h3>Fecha del evento</h3>
@@ -176,64 +156,57 @@ quince años de gracia, belleza y amor.
     <p>Parroquia de San José de Gracia<br>Calle 19, No. 2, Col. José López Portillo, Iztapalapa</p>
     <p>Hora: 17:40 hrs</p>
     <div class="map-link">
-      <a href="https://www.google.com/maps/place/Calle+19+No+2+Jose+Lopez+Portillo+Iztapalapa" target="_blank" rel="noopener noreferrer">Ver en Google Maps</a>
+      <a href="https://www.google.com/maps/place/Calle+19+No+2+Jose+Lopez+Portillo+Iztapalapa" target="_blank">Ver en Google Maps</a>
     </div>
 
     <h3>Recepción</h3>
     <p>Salón Majestic<br>Av. Benito Juárez No. 190, Col. Francisco Villa, Iztapalapa</p>
     <p>Hora: de 19:30 hrs a 20:00 hrs</p>
     <div class="map-link">
-      <a href="https://www.google.com/maps/place/Av.+Benito+Juárez+190+Francisco+Villa+Iztapalapa" target="_blank" rel="noopener noreferrer">Ver en Google Maps</a>
+      <a href="https://www.google.com/maps/place/Av.+Benito+Juárez+190+Francisco+Villa+Iztapalapa" target="_blank">Ver en Google Maps</a>
     </div>
 
-    <h3>Código de vestimenta</h3>
-    <p>Formal</p>
-
-    <h3>Galería de fotos</h3>
+   <h3>Galería de fotos</h3>
     <div class="gallery" id="carousel">
-      <img src="img/IMG-20250507-WA0008.jpg" class="active" alt="Foto 1">
-      <img src="img/IMG-20250505-WA0009.jpg" alt="Foto 2">
-      <img src="img/IMG-20250505-WA0017.jpg" alt="Foto 3">
-      <img src="img/IMG-20250505-WA0002.jpg" alt="Foto 4">
-      <img src="img/IMG-20250505-WA0003.jpg" alt="Foto 5">
-      <img src="img/IMG-20250505-WA0004.jpg" alt="Foto 6">
-      <img src="img/IMG-20250505-WA0005.jpg" alt="Foto 7">
-      <img src="img/IMG-20250505-WA0006.jpg" alt="Foto 8">
-      <img src="img/IMG-20250505-WA0007.jpg" alt="Foto 9">
-      <img src="img/IMG-20250505-WA0010.jpg" alt="Foto 10">
-      <img src="img/IMG-20250505-WA0011.jpg" alt="Foto 11">
-      <img src="img/IMG-20250505-WA0012.jpg" alt="Foto 12">
-      <img src="img/IMG-20250505-WA0013.jpg" alt="Foto 13">
-      <img src="img/IMG-20250505-WA0016.jpg" alt="Foto 14">
-      <img src="img/IMG-20250505-WA0015.jpg" alt="Foto 15">
-      <img src="img/IMG-20250505-WA0018.jpg" alt="Foto 16">
-      <img src="img/IMG-20250505-WA0019.jpg" alt="Foto 17">
-      <img src="img/IMG-20250505-WA0020.jpg" alt="Foto 18">
-      <img src="img/IMG-20260606-WA0006.jpg" alt="Foto 19">
-      <img src="img/IMG-20260707-WA0007.jpg" alt="Foto 20">
+      <img src="img/IMG-20250507-WA0008.jpg" class="active">
+      <img src="img/IMG-20250505-WA0009.jpg">
+      <img src="img/IMG-20250505-WA0017.jpg">
+      <img src="img/IMG-20250505-WA0002.jpg">
+      <img src="img/IMG-20250505-WA0003.jpg">
+      <img src="img/IMG-20250505-WA0004.jpg">
+      <img src="img/IMG-20250505-WA0005.jpg">
+      <img src="img/IMG-20250505-WA0006.jpg">
+      <img src="img/IMG-20250505-WA0007.jpg">
+      <img src="img/IMG-20250505-WA0010.jpg">
+      <img src="img/IMG-20250505-WA0011.jpg">
+      <img src="img/IMG-20250505-WA0012.jpg">
+      <img src="img/IMG-20250505-WA0013.jpg">
+      <img src="img/IMG-20250505-WA0016.jpg">
+      <img src="img/IMG-20250505-WA0015.jpg">
+      <img src="img/IMG-20250505-WA0018.jpg">
+      <img src="img/IMG-20250505-WA0019.jpg">
+      <img src="img/IMG-20250505-WA0020.jpg">
+      <img src="img/IMG-20260606-WA0006.jpg">
+      <img src="img/IMG-20260707-WA0007.jpg">
     </div>
 
-    <h3>Te esperamos</h3>
-    <h3>Por favor confimar su asistencia enviando un mensaje de whatsap a</h3>
-    <h3>Jose Miguel Posadas Domingues</h3>
-    <h3>55 2201 4046</h3>
+
+    <h3>Confirmación de asistencia</h3>
     <form onsubmit="mostrarBoletos(event)">
       <label for="nombre">Nombre del invitado:</label>
-      <input type="text" id="nombre" name="nombre" required autocomplete="off" />
+      <input type="text" id="nombre" name="nombre" required>
       <button type="submit">Consultar boletos</button>
     </form>
     <p id="resultado"></p>
   </div>
 
   <canvas id="boletoCanvas" width="600" height="400"></canvas>
-  <img id="imagen-generada" alt="Boleto generado" title="Haz clic derecho para guardar la imagen">
-
-  <!-- Audio oculto -->
+  <img id="imagen-generada" alt="Invitación generada">
+  <a id="descargarBtn" download="invitacion.png"><button>Descargar Invitación</button></a>
   <audio id="musica" src="audio/Creep.mp3" preload="auto"></audio>
-  
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
   <script>
-    // Lista de invitados con boletos asignados
+     // Lista de invitados con boletos asignados
     const invitados = {
       "Andrea Pérez": 2,
       "Carlos García": 4,
@@ -256,10 +229,10 @@ quince años de gracia, belleza y amor.
       "Berenice Ortega": 2,
       "Juan Ortega": 3,
       "Erick Ortega": 3,
-      "Maria Domiguez": 3,
+      "Maria Domiguez":	3,
       "Isac Trejo": 4,
       "Mario Trejo": 5,
-      "Miguel Angel Trejo": 3,
+      "Miguel Angel Trejo":	3,
       "Jesus Trejo": 3,
       "Carmen Trejo": 2,
       "Isabel Trejo": 3,
@@ -269,30 +242,30 @@ quince años de gracia, belleza y amor.
       "Esmeralda Moreno": 3,
       "Guillermo Marin": 2,
       "Nelly Ramirez": 3,
-      "Isaias Mrtinez": 2,
+      "Isaias Mrtinez":	2,
       "Sonia Cruz": 3,
       "Isabel Diaz": 3,
       "Areli Herrera Gonszales": 7,
       "Sandra Castro Vazques": 3,
       "Cristina Arellano Delgado": 3,
-      "Sara Malfabon": 3,
+      "Sara Malfabon":	3,
       "Alejandro Estrella": 4,
       "Victor": 1,
-      "Jorge Perez Contreras": 6,
+      "Jorge":	6,
       "Alfredo Pachuca": 2,
-      "Samuel Herrera": 6,
-      "Francisco Salgado": 2,
+      "Samuel Herrera":	6,
+      "Francisco Salgado": 	2,
       "Marcelo Valverde": 2,
       "Israel vonilla": 2,
       "Fredy Toledano": 2,
-      "Gibran Jimenez": 2,
-      "Kevin Jimenez": 2,
-      "Pamela Jimenez": 2,
-      "Daniel Jimenez": 2,
+      "Gibran Jimenez":	2,
+      "Kevin Jimenez": 	2,
+      "Pamela Jimenez":	2,
+      "Daniel Jimenez":	2,
       "Victor Parrazal": 2,
-      "Natis": 2,
+      "Natis": 	2,
       "Joshua": 2,
-      "Lidia": 2,
+      "Lidia": 	2,
       "Emanuel": 2,
       "zoe": 2,
       "Pamela": 2,
@@ -300,16 +273,17 @@ quince años de gracia, belleza y amor.
       "Lis": 2,
       "Alan": 2,
       "Edwin": 5,
+
     };
 
-    // Función para mostrar boletos y generar boleto en canvas con QR
     function mostrarBoletos(event) {
       event.preventDefault();
       const nombre = document.getElementById("nombre").value.trim();
       const resultado = document.getElementById("resultado");
       const canvas = document.getElementById("boletoCanvas");
       const ctx = canvas.getContext("2d");
-      const imgGenerada = document.getElementById("imagen-generada");
+      const imagenGenerada = document.getElementById("imagen-generada");
+      const descargarBtn = document.getElementById("descargarBtn");
 
       if (invitados[nombre]) {
         const boletos = invitados[nombre];
@@ -319,7 +293,6 @@ quince años de gracia, belleza y amor.
         imagen.src = 'invitaciones/plantilla.png';
         imagen.onload = function () {
           canvas.style.display = "block";
-          imgGenerada.style.display = "none";
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           ctx.drawImage(imagen, 0, 0, canvas.width, canvas.height);
 
@@ -337,48 +310,37 @@ quince años de gracia, belleza y amor.
           const x0 = (canvas.width - (qrSize * 2 + espacio)) / 2;
           const y0 = canvas.height - qrSize - 10;
 
-          // Generar primer QR
           QRCode.toDataURL('https://www.google.com/maps/place/Calle+19+No+2+Jose+Lopez+Portillo+Iztapalapa', (err, url1) => {
-            if (err) {
-              console.error(err);
-              return;
+            if (!err) {
+              const qr1 = new Image();
+              qr1.src = url1;
+              qr1.onload = () => ctx.drawImage(qr1, x0, y0, qrSize, qrSize);
             }
-            const qr1 = new Image();
-            qr1.src = url1;
-            qr1.onload = () => {
-              ctx.drawImage(qr1, x0, y0, qrSize, qrSize);
+          });
 
-              // Generar segundo QR después del primero para evitar solapamientos
-              QRCode.toDataURL('https://www.google.com/maps/place/Av.+Benito+Juárez+190+Francisco+Villa+Iztapalapa', (err, url2) => {
-                if (err) {
-                  console.error(err);
-                  return;
-                }
-                const qr2 = new Image();
-                qr2.src = url2;
-                qr2.onload = () => {
-                  ctx.drawImage(qr2, x0 + qrSize + espacio, y0, qrSize, qrSize);
-
-                  // Una vez todo dibujado, convertir a imagen para descargar
-                  setTimeout(() => {
-                    const dataURL = canvas.toDataURL("image/png");
-                    imgGenerada.src = dataURL;
-                    imgGenerada.style.display = "block";
-                    canvas.style.display = "none";
-                  }, 300);
-                };
-              });
-            };
+          QRCode.toDataURL('https://www.google.com/maps/place/Av.+Benito+Juárez+190+Francisco+Villa+Iztapalapa', (err, url2) => {
+            if (!err) {
+              const qr2 = new Image();
+              qr2.src = url2;
+              qr2.onload = () => {
+                ctx.drawImage(qr2, x0 + qrSize + espacio, y0, qrSize, qrSize);
+                const dataURL = canvas.toDataURL("image/png");
+                imagenGenerada.src = dataURL;
+                imagenGenerada.style.display = "block";
+                descargarBtn.href = dataURL;
+                descargarBtn.style.display = "inline-block";
+              };
+            }
           });
         };
       } else {
         resultado.textContent = `Lo sentimos, ${nombre} no está en la lista.`;
         canvas.style.display = "none";
-        imgGenerada.style.display = "none";
+        imagenGenerada.style.display = "none";
+        descargarBtn.style.display = "none";
       }
     }
 
-    // Carrusel de imágenes
     let index = 0;
     const images = document.querySelectorAll('#carousel img');
     setInterval(() => {
@@ -387,10 +349,8 @@ quince años de gracia, belleza y amor.
       images[index].classList.add('active');
     }, 3000);
 
-    // Música
     const musica = document.getElementById('musica');
     const btnMusica = document.getElementById('musicaBtn');
-
     function iniciarMusica() {
       musica.play().then(() => {
         btnMusica.style.display = 'none';
@@ -406,7 +366,6 @@ quince años de gracia, belleza y amor.
       }, 2000);
     });
 
-    // Contador regresivo
     const fechaObjetivo = new Date("2025-09-19T00:00:00").getTime();
     function actualizarContador() {
       const ahora = new Date().getTime();
