@@ -2,41 +2,67 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Invitación XV Layla Naomi</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      color: white;
       background: url("img/Fountain_closeup_in_Orlando.jpg") no-repeat center center fixed;
       background-size: cover;
-      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
       text-align: center;
     }
 
     .container {
       max-width: 800px;
-      margin: auto;
       padding: 20px;
       background-color: rgba(0, 0, 0, 0.7);
-      border-radius: 15px;
+      border: 5px solid white;
+      border-radius: 20px;
       margin-top: 20px;
+    }
+
+    h1, h2, h3, p {
+      text-align: center;
+    }
+
+    #contador {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 20px;
+      color: #FFD700;
+    }
+
+    .poem {
+      font-style: italic;
+      white-space: pre-line;
+      margin: 20px 0;
     }
 
     .gallery {
       position: relative;
-      aspect-ratio: 4 / 3;
+      width: 100%;
       max-width: 100%;
+      aspect-ratio: 4 / 3;
       overflow: hidden;
+      background-color: black;
     }
 
     .gallery img {
       position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       object-fit: contain;
       opacity: 0;
       transition: opacity 1s ease;
+      background-color: black;
     }
 
     .gallery img.active {
@@ -45,61 +71,72 @@
     }
 
     form {
+      text-align: center;
       margin-top: 20px;
     }
 
-    input, button {
-      padding: 10px;
-      border-radius: 5px;
-      margin: 5px;
-      border: none;
-      font-size: 16px;
+    label, input {
+      display: block;
+      margin: 5px auto;
+      color: #D70929;
     }
 
-    #invitacion-final {
-      margin: 40px auto;
+    button {
+      background-color: white;
+      color: black;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    button:hover {
+      background-color: #ddd;
+    }
+
+    .map-link {
       text-align: center;
+      margin: 10px 0;
+    }
+
+    .map-link a {
+      color: #aaf;
+      text-decoration: underline;
+    }
+
+    canvas {
+      display: none;
+      margin: 20px auto;
     }
 
     #imagen-generada {
       max-width: 100%;
       height: auto;
+      display: none;
+      margin: 20px auto;
       border: 3px solid white;
       border-radius: 10px;
-      display: none;
     }
 
     #descargarBtn {
       display: none;
-      margin-top: 15px;
-    }
-
-    .descargar-button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: white;
-      color: black;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .descargar-button:hover {
-      background-color: #ddd;
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 <body>
+  <button id="musicaBtn" onclick="iniciarMusica()">🎵 Reproducir música</button>
+  <div id="contador"></div>
 
-  <h1>Para Mis XV</h1>
+  <div class="container">
+    <h1>Para Mis XV</h1>
     <p>Celebramos más que un cumpleaños; celebramos el inicio de un hermoso viaje. Que cada paso que des, cada sueño que sigas y cada sonrisa que regales iluminen tu camino.</p>
     <h2>Layla Naomi Posadas Trejo</h2>
 
-    <h3>por de  parte:</h3>
+    <h3>Por parte de:</h3>
     <p>José Miguel Posadas Domínguez</p>
     <p>Lizbeth Trejo Contreras</p>
-    <h3> nos complace invitarlos a la celebracion del cumpleaños numero 15 de nuestra hija</h3>
 
     <h3>Poema especial para conmemorar</h3>
     <p class="poem">
@@ -129,7 +166,7 @@ Que el camino se tiña de auroras,
 que te acompañen las horas más doradas.
 Hoy celebramos tu vida en flor,
 quince años de gracia, belleza y amor.
-    </p>
+    </p>/p>
 
     <h3>Fecha del evento</h3>
     <p>19 de septiembre del 2025</p>
@@ -148,10 +185,7 @@ quince años de gracia, belleza y amor.
       <a href="https://www.google.com/maps/place/Av.+Benito+Juárez+190+Francisco+Villa+Iztapalapa" target="_blank">Ver en Google Maps</a>
     </div>
 
-    <h3>Código de vestimenta</h3>
-    <p>Casual</p>
-
-    <h3>Galería de fotos</h3>
+ <h3>Galería de fotos</h3>
     <div class="gallery" id="carousel">
       <img src="img/IMG-20250507-WA0008.jpg" class="active">
       <img src="img/IMG-20250505-WA0009.jpg">
@@ -175,7 +209,7 @@ quince años de gracia, belleza y amor.
       <img src="img/IMG-20260707-WA0007.jpg">
     </div>
 
-    <h3>Te esperamos</h3>
+
     <h3>Confirmación de asistencia</h3>
     <form onsubmit="mostrarBoletos(event)">
       <label for="nombre">Nombre del invitado:</label>
@@ -186,12 +220,12 @@ quince años de gracia, belleza y amor.
   </div>
 
   <canvas id="boletoCanvas" width="600" height="400"></canvas>
+  <img id="imagen-generada" alt="Invitación generada">
+  <a id="descargarBtn" download="invitacion.png"><button>Descargar Invitación</button></a>
+  <audio id="musica" src="audio/Creep.mp3" preload="auto"></audio>
 
-  <audio id="musica" src="audio/creep.mp3"></audio>
-
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script>
-    const invitados = {
+  const invitados = {
       "Andrea Pérez": 2,
       "Carlos García": 4,
       "Lucía Mendoza": 3,
@@ -259,7 +293,6 @@ quince años de gracia, belleza y amor.
       "Edwin": 5,
 	
     };
-
     <h3>Confirmación de asistencia</h3>
     <form onsubmit="mostrarBoletos(event)">
       <label for="nombre">Nombre del invitado:</label>
