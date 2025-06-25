@@ -44,12 +44,13 @@
       margin: 20px 0;
     }
 
+    /* GALERÍA RESPONSIVA */
     .gallery {
       position: relative;
       width: 100%;
       max-width: 100%;
       overflow: hidden;
-      aspect-ratio: 4/3;
+      aspect-ratio: 4/3; /* Proporción adaptable */
     }
 
     .gallery img {
@@ -58,9 +59,162 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: cover; /* Mantiene proporción */
       opacity: 0;
-  <script
+      transition: opacity 1s ease;
+    }
+
+    .gallery img.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    form {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    label, input {
+      display: block;
+      margin: 5px auto;
+      color: #D70929;
+    }
+
+    button {
+      background-color: white;
+      color: black;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    button:hover {
+      background-color: #ddd;
+    }
+
+    .map-link {
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .map-link a {
+      color: #aaf;
+      text-decoration: underline;
+    }
+
+    canvas {
+      display: none;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Botón para iniciar música -->
+  <button id="musicaBtn" onclick="iniciarMusica()">🎵 Reproducir música</button>
+  
+  <div id="contador"></div>
+
+  <div class="container">
+    <h1>Para Mis XV</h1>
+    <p>Celebramos más que un cumpleaños; celebramos el inicio de un hermoso viaje...</p>
+    <h2>Layla Naomi Posadas Trejo</h2>
+
+    <h3>Por parte de:</h3>
+    <p>José Miguel Posadas Domínguez</p>
+    <p>Lizbeth Trejo Contreras</p>
+    <h3>Nos complace invitarlos a la celebración del cumpleaños número 15 de nuestra hija</h3>
+
+    <h3>Poema especial para conmemorar</h3>
+    <p class="poem">
+Lila de primavera.
+
+En esta noche de luz y estrellas,
+brilla una flor entre las doncellas.
+Cabello negro como la noche callada,
+ojos cafés, miel de alborada.
+
+Tu sonrisa es calma, suave ternura,
+dulce reflejo de alma pura.
+Quienes te aman, te visten de sueños,
+de pasos nuevos y anhelos pequeños.
+
+Como el jazmín que al viento se mece,
+tu corazón con dulzura florece.
+No hay diamante que más reluzca
+que tu mirada serena y dulce.
+
+Hoy danzas al ritmo del tiempo,
+dejando atrás el inocente cuento.
+Y aunque la niña ya empieza a volar,
+tu esencia dulce sabrá siempre estar.
+
+Que el camino se tiña de auroras,
+que te acompañen las horas más doradas.
+Hoy celebramos tu vida en flor,
+quince años de gracia, belleza y amor.
+    </p>
+
+    <h3>Fecha del evento</h3>
+    <p>19 de septiembre del 2025</p>
+
+    <h3>Misa</h3>
+    <p>Parroquia de San José de Gracia<br>Calle 19, No. 2, Col. José López Portillo, Iztapalapa</p>
+    <p>Hora: 17:40 hrs</p>
+    <div class="map-link">
+      <a href="https://www.google.com/maps/place/Calle+19+No+2+Jose+Lopez+Portillo+Iztapalapa" target="_blank">Ver en Google Maps</a>
+    </div>
+
+    <h3>Recepción</h3>
+    <p>Salón Majestic<br>Av. Benito Juárez No. 190, Col. Francisco Villa, Iztapalapa</p>
+    <p>Hora: de 19:30 hrs a 20:00 hrs</p>
+    <div class="map-link">
+      <a href="https://www.google.com/maps/place/Av.+Benito+Juárez+190+Francisco+Villa+Iztapalapa" target="_blank">Ver en Google Maps</a>
+    </div>
+
+    <h3>Código de vestimenta</h3>
+    <p>Formal</p>
+
+    <h3>Galería de fotos</h3>
+    <div class="gallery" id="carousel">
+      <img src="img/IMG-20250507-WA0008.jpg" class="active">
+      <img src="img/IMG-20250505-WA0009.jpg">
+      <img src="img/IMG-20250505-WA0017.jpg">
+      <img src="img/IMG-20250505-WA0002.jpg">
+      <img src="img/IMG-20250505-WA0003.jpg">
+      <img src="img/IMG-20250505-WA0004.jpg">
+      <img src="img/IMG-20250505-WA0005.jpg">
+      <img src="img/IMG-20250505-WA0006.jpg">
+      <img src="img/IMG-20250505-WA0007.jpg">
+      <img src="img/IMG-20250505-WA0010.jpg">
+      <img src="img/IMG-20250505-WA0011.jpg">
+      <img src="img/IMG-20250505-WA0012.jpg">
+      <img src="img/IMG-20250505-WA0013.jpg">
+      <img src="img/IMG-20250505-WA0016.jpg">
+      <img src="img/IMG-20250505-WA0015.jpg">
+      <img src="img/IMG-20250505-WA0018.jpg">
+      <img src="img/IMG-20250505-WA0019.jpg">
+      <img src="img/IMG-20250505-WA0020.jpg">
+      <img src="img/IMG-20260606-WA0006.jpg">
+      <img src="img/IMG-20260707-WA0007.jpg">
+    </div>
+
+    <h3>Te esperamos</h3>
+    <h3>Confirmación de asistencia</h3>
+    <form onsubmit="mostrarBoletos(event)">
+      <label for="nombre">Nombre del invitado:</label>
+      <input type="text" id="nombre" name="nombre" required>
+      <button type="submit">Consultar boletos</button>
+    </form>
+    <p id="resultado"></p>
+  </div>
+
+  <canvas id="boletoCanvas" width="600" height="400"></canvas>
+
+  <!-- Audio oculto -->
+  <audio id="musica" src="audio/Creep.mp3" preload="auto"></audio>
+  <script>
     // Lista de invitados con boletos asignados
     const invitados = {
       "Andrea Pérez": 2,
