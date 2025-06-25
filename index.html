@@ -185,7 +185,7 @@ quince años de gracia, belleza y amor.
       <a href="https://www.google.com/maps/place/Av.+Benito+Juárez+190+Francisco+Villa+Iztapalapa" target="_blank">Ver en Google Maps</a>
     </div>
 
- <h3>Galería de fotos</h3>
+     <h3>Galería de fotos</h3>
     <div class="gallery" id="carousel">
       <img src="img/IMG-20250507-WA0008.jpg" class="active">
       <img src="img/IMG-20250505-WA0009.jpg">
@@ -225,7 +225,7 @@ quince años de gracia, belleza y amor.
   <audio id="musica" src="audio/Creep.mp3" preload="auto"></audio>
 
   <script>
-  const invitados = {
+const invitados = {
       "Andrea Pérez": 2,
       "Carlos García": 4,
       "Lucía Mendoza": 3,
@@ -291,103 +291,74 @@ quince años de gracia, belleza y amor.
       "Lis": 2,
       "Alan": 2,
       "Edwin": 5,
-	
-    };
-    <h3>Confirmación de asistencia</h3>
-    <form onsubmit="mostrarBoletos(event)">
-      <label for="nombre">Nombre del invitado:</label>
-      <input type="text" id="nombre" name="nombre" required>
-      <button type="submit">Consultar boletos</button>
-    </form>
-    <p id="resultado"></p>
-  </div>
 
-  <!-- Aquí se insertará la invitación generada -->
-  <div id="invitacion-final">
-    <img id="imagen-generada" alt="Invitación generada">
-    <a id="descargarBtn" download="invitacion.png">
-      <button class="descargar-button">Descargar Invitación</button>
-    </a>
-  </div>
-
-  <script>
-    const invitados = {
-      "Andrea Pérez": 2,
-      "Carlos García": 4,
-      "Lucía Mendoza": 3,
     };
 
     function mostrarBoletos(event) {
       event.preventDefault();
       const nombre = document.getElementById("nombre").value.trim();
       const resultado = document.getElementById("resultado");
-      const img = document.getElementById("imagen-generada");
-      const btn = document.getElementById("descargarBtn");
+      const canvas = document.getElementById("boletoCanvas");
+      const ctx = canvas.getContext("2d");
+      const imagenGenerada = document.getElementById("imagen-generada");
+      const descargarBtn = document.getElementById("descargarBtn");
 
       if (invitados[nombre]) {
         const boletos = invitados[nombre];
         resultado.textContent = `${nombre}, se te han asignado ${boletos} boleto(s).`;
 
-        // Crear canvas en memoria
-        const canvas = document.createElement("canvas");
-        canvas.width = 600;
-        canvas.height = 400;
-        const ctx = canvas.getContext("2d");
+        const imagen = new Image();
+        imagen.src = 'invitaciones/plantilla.png';
+        imagen.onload = function () {
+          canvas.style.display = "block";
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(imagen, 0, 0, canvas.width, canvas.height);
 
-        const plantilla = new Image();
-        plantilla.src = 'invitaciones/plantilla.png';
-
-        plantilla.onload = () => {
-          ctx.drawImage(plantilla, 0, 0, canvas.width, canvas.height);
           ctx.fillStyle = "white";
-          ctx.font = "24px Arial";
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
-
-          const yTexto = canvas.height - 150;
-          ctx.fillText(`${nombre}`, canvas.width / 2, yTexto - 20);
-          ctx.fillText(`y Familia`, canvas.width / 2, yTexto + 20);
-          ctx.fillText(`Boletos: ${boletos}`, canvas.width / 2, yTexto + 45);
+          ctx.font = "24px Arial";
+          const textoY = canvas.height - 150;
+          ctx.fillText(`${nombre}`, canvas.width / 2, textoY - 20);
+          ctx.fillText("y Familia", canvas.width / 2, textoY + 20);
+          ctx.fillText(`Boletos: ${boletos}`, canvas.width / 2, textoY + 45);
 
           const qrSize = 60;
           const espacio = 220;
           const x0 = (canvas.width - (qrSize * 2 + espacio)) / 2;
           const y0 = canvas.height - qrSize - 10;
 
-          QRCode.toDataURL("https://maps.google.com/?q=misa", (err1, url1) => {
-            if (!err1) {
+          QRCode.toDataURL('https://www.google.com/maps/place/Calle+19+No+2+Jose+Lopez+Portillo+Iztapalapa', (err, url1) => {
+            if (!err) {
               const qr1 = new Image();
               qr1.src = url1;
-              qr1.onload = () => {
-                ctx.drawImage(qr1, x0, y0, qrSize, qrSize);
-              };
+              qr1.onload = () => ctx.drawImage(qr1, x0, y0, qrSize, qrSize);
             }
           });
 
-          QRCode.toDataURL("https://maps.google.com/?q=recepcion", (err2, url2) => {
-            if (!err2) {
+          QRCode.toDataURL('https://www.google.com/maps/place/Av.+Benito+Juárez+190+Francisco+Villa+Iztapalapa', (err, url2) => {
+            if (!err) {
               const qr2 = new Image();
               qr2.src = url2;
               qr2.onload = () => {
                 ctx.drawImage(qr2, x0 + qrSize + espacio, y0, qrSize, qrSize);
-
                 const dataURL = canvas.toDataURL("image/png");
-                img.src = dataURL;
-                img.style.display = "block";
-                btn.href = dataURL;
-                btn.style.display = "inline-block";
+                imagenGenerada.src = dataURL;
+                imagenGenerada.style.display = "block";
+                descargarBtn.href = dataURL;
+                descargarBtn.style.display = "inline-block";
               };
             }
           });
         };
       } else {
         resultado.textContent = `Lo sentimos, ${nombre} no está en la lista.`;
-        document.getElementById("imagen-generada").style.display = "none";
-        document.getElementById("descargarBtn").style.display = "none";
+        canvas.style.display = "none";
+        imagenGenerada.style.display = "none";
+        descargarBtn.style.display = "none";
       }
     }
 
-    // Galería automática
     let index = 0;
     const images = document.querySelectorAll('#carousel img');
     setInterval(() => {
@@ -395,6 +366,41 @@ quince años de gracia, belleza y amor.
       index = (index + 1) % images.length;
       images[index].classList.add('active');
     }, 3000);
+
+    const musica = document.getElementById('musica');
+    const btnMusica = document.getElementById('musicaBtn');
+    function iniciarMusica() {
+      musica.play().then(() => {
+        btnMusica.style.display = 'none';
+      }).catch(e => {
+        console.log("Interacción requerida para iniciar música:", e);
+      });
+    }
+
+    musica.addEventListener('ended', () => {
+      setTimeout(() => {
+        musica.currentTime = 0;
+        musica.play();
+      }, 2000);
+    });
+
+    const fechaObjetivo = new Date("2025-09-19T00:00:00").getTime();
+    function actualizarContador() {
+      const ahora = new Date().getTime();
+      const diferencia = fechaObjetivo - ahora;
+      if (diferencia < 0) {
+        document.getElementById("contador").innerHTML = "¡Hoy es el gran día!";
+        clearInterval(intervaloContador);
+        return;
+      }
+      const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+      document.getElementById("contador").innerHTML = `${dias} días, ${horas} horas, ${minutos} minutos, ${segundos} segundos`;
+    }
+    const intervaloContador = setInterval(actualizarContador, 1000);
+    actualizarContador();
   </script>
 </body>
 </html>
