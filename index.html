@@ -344,4 +344,84 @@ quince años de gracia, belleza y amor.
             const qr1 = new Image();
             qr1.src = url1;
             qr1.onload = () => {
-              ctx.drawImage(qr1,
+              ctx.drawImage(qr1, x0, y0, qrSize, qrSize);
+
+              // Generar segundo QR después del primero para evitar solapamientos
+              QRCode.toDataURL('https://www.google.com/maps/place/Av.+Benito+Juárez+190+Francisco+Villa+Iztapalapa', (err, url2) => {
+                if (err) {
+                  console.error(err);
+                  return;
+                }
+                const qr2 = new Image();
+                qr2.src = url2;
+                qr2.onload = () => {
+                  ctx.drawImage(qr2, x0 + qrSize + espacio, y0, qrSize, qrSize);
+
+                  // Una vez todo dibujado, convertir a imagen para descargar
+                  setTimeout(() => {
+                    const dataURL = canvas.toDataURL("image/png");
+                    imgGenerada.src = dataURL;
+                    imgGenerada.style.display = "block";
+                    canvas.style.display = "none";
+                  }, 300);
+                };
+              });
+            };
+          });
+        };
+      } else {
+        resultado.textContent = `Lo sentimos, ${nombre} no está en la lista.`;
+        canvas.style.display = "none";
+        imgGenerada.style.display = "none";
+      }
+    }
+
+    // Carrusel de imágenes
+    let index = 0;
+    const images = document.querySelectorAll('#carousel img');
+    setInterval(() => {
+      images.forEach(img => img.classList.remove('active'));
+      index = (index + 1) % images.length;
+      images[index].classList.add('active');
+    }, 3000);
+
+    // Música
+    const musica = document.getElementById('musica');
+    const btnMusica = document.getElementById('musicaBtn');
+
+    function iniciarMusica() {
+      musica.play().then(() => {
+        btnMusica.style.display = 'none';
+      }).catch(e => {
+        console.log("Interacción requerida para iniciar música:", e);
+      });
+    }
+
+    musica.addEventListener('ended', () => {
+      setTimeout(() => {
+        musica.currentTime = 0;
+        musica.play();
+      }, 2000);
+    });
+
+    // Contador regresivo
+    const fechaObjetivo = new Date("2025-09-19T00:00:00").getTime();
+    function actualizarContador() {
+      const ahora = new Date().getTime();
+      const diferencia = fechaObjetivo - ahora;
+      if (diferencia < 0) {
+        document.getElementById("contador").innerHTML = "¡Hoy es el gran día!";
+        clearInterval(intervaloContador);
+        return;
+      }
+      const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+      document.getElementById("contador").innerHTML = `${dias} días, ${horas} horas, ${minutos} minutos, ${segundos} segundos`;
+    }
+    const intervaloContador = setInterval(actualizarContador, 1000);
+    actualizarContador();
+  </script>
+</body>
+</html>
