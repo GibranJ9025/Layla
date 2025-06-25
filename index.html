@@ -346,6 +346,7 @@ const invitados = {
                 const dataURL = canvas.toDataURL("image/png");
                 imagenGenerada.src = dataURL;
                 imagenGenerada.style.display = "block";
+                canvas.style.display = "none";
                 descargarBtn.href = dataURL;
                 descargarBtn.style.display = "inline-block";
               };
