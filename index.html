@@ -311,6 +311,7 @@ const invitados = {
         imagen.src = 'invitaciones/plantilla.png';
         imagen.onload = function () {
           canvas.style.display = "block";
+          canvas.style.display = "none";
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           ctx.drawImage(imagen, 0, 0, canvas.width, canvas.height);
 
