@@ -50,7 +50,6 @@
       width: 100%;
       max-width: 100%;
       overflow: hidden;
-      aspect-ratio: 4/3; /* Proporción adaptable */
     }
 
     .gallery img {
@@ -59,7 +58,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Mantiene proporción */
+      object-fit: contain; /* Cambiado para evitar recortes */
+      background-color: black;
       opacity: 0;
       transition: opacity 1s ease;
     }
@@ -107,6 +107,16 @@
     canvas {
       display: none;
       margin: 20px auto;
+    }
+
+    /* Imagen generada para descargar */
+    #imagen-generada {
+      max-width: 100%;
+      height: auto;
+      display: none;
+      margin: 20px auto;
+      border: 3px solid white;
+      border-radius: 10px;
     }
   </style>
 </head>
@@ -211,9 +221,12 @@ quince años de gracia, belleza y amor.
   </div>
 
   <canvas id="boletoCanvas" width="600" height="400"></canvas>
+  <img id="imagen-generada" alt="Boleto generado">
 
   <!-- Audio oculto -->
   <audio id="musica" src="audio/Creep.mp3" preload="auto"></audio>
+  
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script>
     // Lista de invitados con boletos asignados
     const invitados = {
@@ -238,10 +251,10 @@ quince años de gracia, belleza y amor.
       "Berenice Ortega": 2,
       "Juan Ortega": 3,
       "Erick Ortega": 3,
-      "Maria Domiguez":	3,
+      "Maria Domiguez": 3,
       "Isac Trejo": 4,
       "Mario Trejo": 5,
-      "Miguel Angel Trejo":	3,
+      "Miguel Angel Trejo": 3,
       "Jesus Trejo": 3,
       "Carmen Trejo": 2,
       "Isabel Trejo": 3,
@@ -251,30 +264,30 @@ quince años de gracia, belleza y amor.
       "Esmeralda Moreno": 3,
       "Guillermo Marin": 2,
       "Nelly Ramirez": 3,
-      "Isaias Mrtinez":	2,
+      "Isaias Mrtinez": 2,
       "Sonia Cruz": 3,
       "Isabel Diaz": 3,
       "Areli Herrera Gonszales": 7,
       "Sandra Castro Vazques": 3,
       "Cristina Arellano Delgado": 3,
-      "Sara Malfabon":	3,
+      "Sara Malfabon": 3,
       "Alejandro Estrella": 4,
       "Victor": 1,
-      "Jorge":	6,
+      "Jorge": 6,
       "Alfredo Pachuca": 2,
-      "Samuel Herrera":	6,
-      "Francisco Salgado": 	2,
+      "Samuel Herrera": 6,
+      "Francisco Salgado": 2,
       "Marcelo Valverde": 2,
       "Israel vonilla": 2,
       "Fredy Toledano": 2,
-      "Gibran Jimenez":	2,
-      "Kevin Jimenez": 	2,
-      "Pamela Jimenez":	2,
-      "Daniel Jimenez":	2,
+      "Gibran Jimenez": 2,
+      "Kevin Jimenez": 2,
+      "Pamela Jimenez": 2,
+      "Daniel Jimenez": 2,
       "Victor Parrazal": 2,
-      "Natis": 	2,
+      "Natis": 2,
       "Joshua": 2,
-      "Lidia": 	2,
+      "Lidia": 2,
       "Emanuel": 2,
       "zoe": 2,
       "Pamela": 2,
@@ -291,6 +304,7 @@ quince años de gracia, belleza y amor.
       const resultado = document.getElementById("resultado");
       const canvas = document.getElementById("boletoCanvas");
       const ctx = canvas.getContext("2d");
+      const imgGenerada = document.getElementById("imagen-generada");
 
       if (invitados[nombre]) {
         const boletos = invitados[nombre];
@@ -300,6 +314,7 @@ quince años de gracia, belleza y amor.
         imagen.src = 'invitaciones/plantilla.png';
         imagen.onload = function () {
           canvas.style.display = "block";
+          imgGenerada.style.display = "none";
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           ctx.drawImage(imagen, 0, 0, canvas.width, canvas.height);
 
@@ -317,6 +332,7 @@ quince años de gracia, belleza y amor.
           const x0 = (canvas.width - (qrSize * 2 + espacio)) / 2;
           const y0 = canvas.height - qrSize - 10;
 
+          // Generar primer QR
           QRCode.toDataURL('https://www.google.com/maps/place/Calle+19+No+2+Jose+Lopez+Portillo+Iztapalapa', (err, url1) => {
             if (err) {
               console.error(err);
@@ -324,22 +340,36 @@ quince años de gracia, belleza y amor.
             }
             const qr1 = new Image();
             qr1.src = url1;
-            qr1.onload = () => ctx.drawImage(qr1, x0, y0, qrSize, qrSize);
-          });
+            qr1.onload = () => {
+              ctx.drawImage(qr1, x0, y0, qrSize, qrSize);
 
-          QRCode.toDataURL('https://www.google.com/maps/place/Av.+Benito+Juárez+190+Francisco+Villa+Iztapalapa', (err, url2) => {
-            if (err) {
-              console.error(err);
-              return;
-            }
-            const qr2 = new Image();
-            qr2.src = url2;
-            qr2.onload = () => ctx.drawImage(qr2, x0 + qrSize + espacio, y0, qrSize, qrSize);
+              // Generar segundo QR después del primero para evitar solapamientos
+              QRCode.toDataURL('https://www.google.com/maps/place/Av.+Benito+Juárez+190+Francisco+Villa+Iztapalapa', (err, url2) => {
+                if (err) {
+                  console.error(err);
+                  return;
+                }
+                const qr2 = new Image();
+                qr2.src = url2;
+                qr2.onload = () => {
+                  ctx.drawImage(qr2, x0 + qrSize + espacio, y0, qrSize, qrSize);
+
+                  // Una vez todo dibujado, convertir a imagen para descargar
+                  setTimeout(() => {
+                    const dataURL = canvas.toDataURL("image/png");
+                    imgGenerada.src = dataURL;
+                    imgGenerada.style.display = "block";
+                    canvas.style.display = "none";
+                  }, 300);
+                };
+              });
+            };
           });
         };
       } else {
         resultado.textContent = `Lo sentimos, ${nombre} no está en la lista.`;
         canvas.style.display = "none";
+        imgGenerada.style.display = "none";
       }
     }
 
